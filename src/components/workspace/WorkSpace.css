@@ -1,0 +1,217 @@
+body {
+    background-color: #121212;
+    color: #fff;
+}
+
+div, h2, p {
+    background: transparent;
+}
+
+.workspace-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.workspace-section {
+    width: 250px;
+    background-color: #2a2a2a;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    background-color: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    z-index: 999;
+}
+
+.workspace-header p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 14px;
+    background: transparent;
+}
+
+.workspace-header svg {
+    width: 16px;
+    height: 16px;
+    background: transparent;
+}
+
+.dropdown-menu {
+    background-color: #2a2a2a;
+    border-radius: 3px;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    background-color: #2a2a2a;
+}
+
+.dropdown-item:hover {
+    background-color: #3a3a3a;
+}
+
+.logout {
+    color: #FFA54C;
+}
+
+.dropdown-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.rotated {
+    transform: rotate(180deg);
+}
+
+hr{
+    border:1px solid  rgba(255, 255, 255, 0.1);
+}
+
+.create-folder {
+    display: flex;
+    width: 14vw;
+    height: 8vh;
+    background-color: #3a3a3a;
+    justify-content: center;
+    align-items: center;
+    margin: 0 15%;
+    border-radius: 0.5vw;
+}
+.create-folder div, svg {
+    background: transparent;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+
+/* Add this to your existing CSS */
+
+.folder-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.create-folder {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.create-folder svg {
+    margin-right: 10px;
+}
+
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+}
+
+.folder-item {
+    background-color: #2a2a2a;
+    padding: 1vw;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.folder-item svg {
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background-color: #151515;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    border:1px solid  rgba(255, 255, 255, 0.1);
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #3a3a3a;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.done-btn {
+    color: #4a90e2;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    color: #ffffff;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.button-section {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 2em;
+}
+.button-section p {
+    font-weight: lighter;
+}
+
+.create-typebot {
+    width: 15vw;
+    height: 40vh;
+    background-color: #1A5FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5% 15%;
+}

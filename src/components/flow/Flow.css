@@ -1,0 +1,169 @@
+/* Workspace css */
+
+
+
+
+.work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0% 5%;
+    padding: 1% 0%;
+  }
+  
+  .work-header input {
+    background-color: #37373E;
+    color: #767676D1;
+    border: none;
+    padding: 0.3em;
+    border-radius: 4px;
+  }
+  
+  .work-header-1, .work-header-2 {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 0.3em;
+   cursor: pointer;
+  }
+  
+  .work-header-2-1 {
+    background-color: #848890;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+  }
+  .work-header-2-2 {
+    background-color: #4ADE80CC;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+  }
+  
+  .work-header-1 div, .work-header-2 div {
+    margin: 0 5%;
+    text-align: center;
+  }
+  
+  .work-header-item-1 {
+    border: 1px solid #7EA6FF;
+    color: #7EA6FF;
+    padding: 0.1em 0.6em;
+    border-radius: 4px;
+  }
+  
+  .workspace-sidebar {
+    width: 27vw;
+    height: 85vh;
+    margin: 1% 2%;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #18181B;
+  }
+  
+  
+  .Bot-bar {
+    margin: 16% 2%
+  }
+  
+  .bot-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1%;
+  }
+  
+  
+  .bot-options-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #1F1F23;
+    margin: 2% 2%;
+    width: 12vw;
+    height: 5vh;
+    padding: 0.2em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  
+  
+  .start-items-1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 4px;
+    width: 10vw;
+    background-color: #18181B;
+    padding: 0.4em;
+    margin: 2em 0em;
+  }
+  
+  .theme-header {
+    display: flex;
+    margin-top: 0;
+  }
+  .theme-header-item p {
+    padding: 0.5em
+  }
+  
+  .theme-header-item {
+    margin: 3% 0;
+    margin-top: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 0em 2em;
+    background-color: #18181B;
+  }
+  
+  .flow-items {
+  
+    overflow-y: auto;
+  
+    height: 80vh;
+  
+    width: 25vw; /* Reduced from 30vw to 25vw */
+  
+    scrollbar-width: thin; /* For Firefox */
+  
+    scrollbar-color: transparent transparent; /* For Firefox */
+  
+  }
+  
+  /* For Webkit browsers like Chrome, Safari */
+  
+  .flow-items::-webkit-scrollbar {
+  
+    width: 6px; /* Reduced scrollbar width */
+  
+  }
+  
+  .flow-items::-webkit-scrollbar-track {
+  
+    background: transparent;
+  
+  }
+  
+  .flow-items::-webkit-scrollbar-thumb {
+  
+    background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent thumb */
+  
+    border-radius: 3px;
+  
+  }
+  
+  /* For IE and Edge */
+  
+  .flow-items {
+  
+    -ms-overflow-style: none;
+  
+  }
+  
+  .flow-items-1 {
+    background-color: #18181B;
+    width: 18vw;
+    height: 14vh;
+    padding: 0.8em;
+    margin-bottom: 1em;
+  }

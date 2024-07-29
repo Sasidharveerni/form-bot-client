@@ -1,0 +1,112 @@
+/* BackgroundPage.css */
+
+.background-container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #121212;
+}
+
+.polygon-image {
+  position: absolute;
+  left: 5%;
+  top: 20%;
+  width: 25vw;
+  max-width: 300px;
+}
+
+.ellipse-image-1 {
+  position: absolute;
+  width: 15vw;
+  max-width: 200px;
+  right: 30%;
+  bottom: 0;
+  background: transparent;
+}
+
+.ellipse-image-2 {
+  position: absolute;
+  right: 0%;
+  top: 5%;
+  width: 7vw;
+  max-width: 100px;
+}
+
+.form-container {
+  padding: 1em;
+  /* Reduced from 2em */
+  border-radius: 10px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  bottom: 2vw;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  /* Reduced from 300px */
+}
+
+input {
+  padding: 0.5em;
+  margin-bottom: 0.7em;
+  border: 1px solid #4A5568;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #636364;
+}
+
+.submit-btn {
+  padding: 0.7em;
+  border: none;
+  border-radius: 5px;
+  background-color: #1A5FFF;
+  color: #FFF;
+  cursor: pointer;
+  margin-top: 0.8em;
+}
+
+p {
+  color: #E2E8F0;
+  margin-bottom: 0.3em;
+  /* Reduced from 0.5em */
+  font-size: 0.8em;
+  /* Slightly smaller font size */
+}
+
+.submit-btn:hover {
+  background-color: #3182CE;
+}
+
+form p span {
+  color: #1A5FFF;
+  cursor: pointer;
+}
+
+.error-text {
+  color: #FF4141;
+}
+
+.error-border {
+  border: 1px solid rgba(255, 39, 39, 0.50);
+
+background: rgba(196, 196, 196, 0.00);
+
+box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.error-message {
+  color: #522224;
+  font-size: 0.75em;
+  margin-top: -0.5em;
+  margin-bottom: 0.5em;
+}
