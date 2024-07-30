@@ -162,8 +162,14 @@
   
   .flow-items-1 {
     background-color: #18181B;
-    width: 18vw;
+    width: 20vw;
     height: 14vh;
-    padding: 0.8em;
+    padding: 0.5em;
     margin-bottom: 1em;
+  }
+
+  .req-text {
+    color: #522224;
+    margin: 0;
+    font-size: 0.8em;
   }

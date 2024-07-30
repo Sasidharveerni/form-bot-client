@@ -22,7 +22,7 @@ import VectorImg6 from '../assets/vectors/Vector (3).png';
 import '../App.css'
 import { useNavigate } from 'react-router';
 
-function HomePage() {
+function HomePage({isLogin}) {
     const navigate = useNavigate();
     const vectorImages = [VectorImg1, VectorImg2, VectorImg3, VectorImg4, VectorImg5, VectorImg6]
     const names = ['Hidden Fields', 'Teams Colloboration', 'Link to sub typebots', 'Custom code', 'Custom domain', 'Folder management'];
@@ -32,7 +32,15 @@ function HomePage() {
 
     const supportLinks2 = ['Discord', 'Github repository', 'Twitter', 'Linkedin', 'OSS Friends']
 
-    const supportLinks3 = ['About', 'Contact', 'Terms of Service', 'Privacy Policy']
+    const supportLinks3 = ['About', 'Contact', 'Terms of Service', 'Privacy Policy'];
+
+    const redirect = () => {
+        if(!isLogin) {
+            navigate('/signup')
+        } else {
+            navigate('/workspace')
+        }
+    }
     
     return (
         <div style={{backgroundColor: '#121212', height: '100%'}}>
@@ -43,7 +51,7 @@ function HomePage() {
                 </div>
                 <div>
                     <button className='button-1'>Sign in </button>
-                    <button className='button-2' onClick={() => navigate('/signup')}>Create Form Button </button>
+                    <button className='button-2' onClick={() => redirect()}>Create Form Button </button>
                 </div>
             </div>
 
@@ -56,7 +64,7 @@ function HomePage() {
                     <h1> Build advanced chatbots visually </h1>
                     <p> Typebot gives you powerful blocks to create unique chat experiences. Embed them
                         anywhere on your web/mobile apps and start collecting results like magic. </p>
-                    <button className='button-3' onClick={() => navigate('/signup')}>
+                    <button className='button-3' onClick={() => redirect()}>
                         Create a FormBot for free
                     </button>
                 </div>

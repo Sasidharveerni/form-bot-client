@@ -120,7 +120,7 @@ hr{
 .folder-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2em;
+    grid-template-columns: 0.2fr 0.2fr 0.2fr 0.2fr;
 }
 
 .folder-item {
@@ -214,4 +214,21 @@ hr{
     justify-content: space-evenly;
     align-items: center;
     margin: 5% 15%;
+    position: relative;
+}
+
+.forms-grid {
+    margin-top: 2%;
+    margin-left: 13%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 0.2fr 0.2fr 0.2fr 0.2fr
+}
+
+.position-delete {
+    position: absolute;
+    top: -1vw;
+    right: 0;
+    left: 13vw;
+    cursor: pointer;
 }

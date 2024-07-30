@@ -8,6 +8,8 @@ import Response from './Response';
 import axios from 'axios';
 import showToasts from '../../pages/Toast';
 import { useNavigate } from 'react-router';
+import { isValidGifUrl, isValidImageUrl, isValidVideoUrl } from './validation';
+import { deleteIcon } from './Svg';
 
 function Flow({userData}) {
 
@@ -68,52 +70,121 @@ function Flow({userData}) {
     }
 
 
-    const shareFormBot = async () => {
+    const updateSavedFormData = async () => {
         try {
-            const response = await axios.put(`http://localhost:5000/update-flow/${getFormId}`, {
-                name: formName,
-                steps: finalFlow
-               })
-            if(response.data.status === 'Success') {
-                showToasts(response.data.message, 'success');
-                setRedirect({...redirect, flow: false, theme: true, response: false})
+            // Validate steps before sending
+            
+            for (let step of finalFlow) {
+                console.log(step)
+                if (step.contentType === 'image' && !isValidImageUrl(step.value)) {
+                    showToasts('Invalid image URL in steps', 'error');
+                    return;
+                } else if (step.contentType === 'video' && !isValidVideoUrl(step.value)) {
+                    showToasts('Invalid video URL in steps', 'error');
+                    return;
+                } else if (step.contentType === 'gif' && !isValidGifUrl(step.value)) {
+                    showToasts('Invalid GIF URL in steps', 'error');
+                    return;
+                }
             }
+
+            if(finalFlow.length !== 0) {
+                const response = await axios.put(`http://localhost:5000/update-flow/${getFormId}`, {
+                    name: formName,
+                    steps: finalFlow.filter(step => step.stepType !== 'svg') // Remove svgs before sending
+                });
+        
+                if (response.data.status === 'Success') {
+                    showToasts(response.data.message, 'success');
+                    setRedirect({ ...redirect, flow: false, theme: true, response: false });
+                } else {
+                    showToasts(response.data.message, 'error');
+                }
+            } else {
+                showToasts('Add some steps to save the flow', 'error')
+            }
+    
         } catch (error) {
             showToasts('Error in saving/updating', 'error');
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
 
     const saveFormData = async () => {
         try {
-           const response = await axios.post('http://localhost:5000/create-flow', {
-            name: formName,
-            steps: finalFlow, // Remove svgs before sending
-            creatorId: userData._id,
-            folderId: localStorage.getItem('folderId') || ''
-           })
-           if(response.data.status === 'Success') {
-            showToasts('Form saved successfully', 'success');
-            setRedirect({...redirect, flow: false, theme: true, response: false});
-           } else {
-            showToasts(response.data.message, 'error');
-           }
+            // Validate steps before sending
+            for (let step of finalFlow) {
+                if (step.contentType === 'image' && !isValidImageUrl(step.value)) {
+                    showToasts('Invalid image URL in steps', 'error');
+                    return;
+                } else if (step.contentType === 'video' && !isValidVideoUrl(step.value)) {
+                    showToasts('Invalid video URL in steps', 'error');
+                    return;
+                } else if (step.contentType === 'gif' && !isValidGifUrl(step.value)) {
+                    showToasts('Invalid GIF URL in steps', 'error');
+                    return;
+                }
+            }
+
+            if(finalFlow.length !== 0) {
+
+                const response = await axios.post('http://localhost:5000/create-flow', {
+                    name: formName,
+                    steps: finalFlow.filter(step => step.stepType !== 'svg'), // Remove svgs before sending
+                    creatorId: userData._id,
+                    folderId: localStorage.getItem('folderId') || ''
+                });
+        
+                if (response.data.status === 'Success') {
+                    showToasts('Form saved successfully', 'success');
+                    setRedirect({ ...redirect, flow: false, theme: true, response: false });
+                } else {
+                    showToasts(response.data.message, 'error');
+                }
+            } else {
+                showToasts('Start the flow to save', 'error')
+            }
+    
         } catch (error) {
             console.log(error);
             showToasts('Error saving form', 'error');
         }
+    };
+    
+
+    const handleDelete = (ind) => {
+
+        const updatedFlow = finalFlow.filter((ele, id) => id !== ind)
+        setFinalFlow(updatedFlow)
+        
     }
    
 
 
     const handleAction = () => {
         if (formName || finalFlow.length > 0) {
-            shareFormBot();
+            updateSavedFormData();
         } else {
             saveFormData();
         }
     };
+
+    const getSvgs = (contentType) => {
+        let id = 0;
+        botOptions.map((ele, ind) => {
+            if(ele.toLowerCase() === contentType) {
+                id = ind;
+            }
+            return id
+        })
+        
+        return (
+            <div style={{marginTop: '0.6vw'}}>
+                {botSVGs[id]}
+            </div>
+        )
+    }
 
 
     if (!userData) {
@@ -125,11 +196,8 @@ function Flow({userData}) {
         );
     }
 
-    console.log(finalFlow)
 
-    if(!finalFlow) {
-
-    }
+    
 
 
 
@@ -138,7 +206,7 @@ function Flow({userData}) {
             <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.16)' }}>
                 <div className='work-header'>
                     <div>
-                        <input type='text' placeholder=' Enter form name' value={formName} onChange={(e) => setFormName(e.target.value)}/>
+                        <input type='text' placeholder=' Enter form name' value={formName} onChange={(e) => setFormName(e.target.value)} required/>
                     </div>
 
                     <div className='work-header-1'>
@@ -230,19 +298,22 @@ function Flow({userData}) {
                         </div>
                         <div className='flow-items'>
                             {finalFlow.map((ele, ind) => (
-                            <div className='flow-items-1'>
+                            <div className='flow-items-1' style={{position: 'relative'}}>
+                                <div style={{textAlign: 'right', position: 'absolute', backgroundColor: '#444444', borderRadius: '50%',bottom: '6vw', left: '18vw', cursor: 'pointer'}} onClick={() => handleDelete(ind)}>
+                                    {deleteIcon}
+                                </div>
                                 <div style={{marginBottom: '0.5em'}}>
                                     {finalFlow[ind].contentType}
                                 </div>
 
                                 <div>
-                                    <div style={{borderRadius: '5px', border: finalFlow[ind].name==='bot' ? '1px solid #F55050' :  '', display: 'flex', backgroundColor: finalFlow[ind].name==='bot' ? '#1F1F23' : '', padding: '0.4em', marginBottom: '0.4em'}}>
-                                        {finalFlow[ind].stepType === 'bot' && (<div>{finalFlow[ind].svgs}</div>)}
+                                    <div style={{borderRadius: '5px', border: finalFlow[ind].stepType==='bot' && !finalFlow[ind].value ? '1px solid #F55050' :  '', display: 'flex', backgroundColor: finalFlow[ind].stepType==='bot' ? '#1F1F23' : '',}}>
+                                        {finalFlow[ind].stepType === 'bot' && getSvgs(finalFlow[ind].contentType)}
                                         {finalFlow[ind].stepType === 'bot' ? (<input style={{backgroundColor: '#1F1F23', border: 'none', outline: 'none', color: '#fff', caretColor:'#fff',}} type='text' placeholder=' Click here to edit' value={finalFlow[ind].value} onChange={(e) => handleInputChange(ind, e.target.value)}/>) : (
                                             <p style={{color: '#555555', fontSize: '0.8em'}}>Hint : User will input a {finalFlow[ind].text} on his form</p>
                                         )}
                                     </div>
-                                    {finalFlow[ind].stepType === 'bot' &&  <p style={{color: '#522224', margin: '0em', fontSize: '0.8em'}}>Required field</p>}
+                                    {finalFlow[ind].stepType === 'bot' && !finalFlow[ind].value &&  <p className='req-text'>Required field</p>}
                                 </div>
                             </div>
                             ))}

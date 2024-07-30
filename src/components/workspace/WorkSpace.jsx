@@ -77,10 +77,10 @@ function WorkSpace({ userData }) {
         }
     };
 
-    const printForm = (ele) => {
+    const navigateForm = (ele) => {
         localStorage.setItem('formId', ele._id);
-        navigate('/start-flow')
-        console.log(ele)
+        navigate('/start-flow');
+        console.log(ele);
     }
 
     const createFolder = async () => {
@@ -103,6 +103,38 @@ function WorkSpace({ userData }) {
         console.log(folder)
         localStorage.setItem('folderId', folder._id)
         setSelectedFolder(folder);
+    };
+
+    const reDirectToFlow = () => {
+        localStorage.removeItem('formId');
+        navigate('/start-flow');
+    }
+
+    const deleteFlow = async (getFormId) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/delete-flow/${getFormId}`);
+            if (response.data.status === 'Success') {
+                showToasts('Flow deleted successfully', 'success');
+                //here update forms in setFolders
+
+                setFolders(prevFolders => {
+                    return prevFolders.map(folder => {
+                        if (folder._id === selectedFolder._id) {
+                            return {
+                                ...folder,
+                                forms: folder.forms.filter(form => form._id !== getFormId)
+                            };
+                        }
+                        return folder;
+                    });
+                });
+            } else {
+                showToasts(response.data.message, 'error');
+                console.log('Error in deleting flow');
+            }
+        } catch (error) {
+            console.log('Error in deleting flow', error);
+        }
     };
 
     if (!userData) {
@@ -194,8 +226,8 @@ function WorkSpace({ userData }) {
                 </div>
             )}
 
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div className='create-typebot' onClick={() => navigate('/start-flow')}>
+            <div className='forms-grid'>
+                <div className='create-typebot' onClick={() => reDirectToFlow()}>
                     <div>
                         {createFlowIcon}
                     </div>
@@ -205,8 +237,11 @@ function WorkSpace({ userData }) {
                 </div>
 
                 {selectedFolder && selectedFolder.forms && selectedFolder.forms.map((ele, ind) => (
-                    <div key={ind} className='create-typebot' onClick={() => printForm(ele)} style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}>
-                        <div>
+                    <div key={ind} className='create-typebot' onClick={() => navigateForm(ele)} style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}>
+                        <div className='position-delete' onClick={(e) => {
+                            e.stopPropagation();
+                            deleteFlow(ele._id);
+                        }}>
                             {deleteIcon}
                         </div>
                         <div>
