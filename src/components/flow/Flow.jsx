@@ -18,6 +18,8 @@ function Flow({userData}) {
     const botOptions = ['Text', 'Image', 'Video', 'Gif'];
 
     const humanInputs = ['Text', 'Number', 'Email', 'Phone', 'Date', 'Rating', 'Buttons'];
+    
+    const [enableShare, setEnableShare] = useState(false)
 
     const [formName, setFormName] = useState('');
 
@@ -51,6 +53,7 @@ function Flow({userData}) {
 
     useEffect(() => {
         if(getFormId) {
+            setEnableShare(true);
             getFormData();
         }
     }, [])
@@ -96,6 +99,7 @@ function Flow({userData}) {
         
                 if (response.data.status === 'Success') {
                     showToasts(response.data.message, 'success');
+                    setEnableShare(true)
                     setRedirect({ ...redirect, flow: false, theme: true, response: false });
                 } else {
                     showToasts(response.data.message, 'error');
@@ -138,6 +142,7 @@ function Flow({userData}) {
         
                 if (response.data.status === 'Success') {
                     showToasts('Form saved successfully', 'success');
+                    setEnableShare(true);
                     setRedirect({ ...redirect, flow: false, theme: true, response: false });
                 } else {
                     showToasts(response.data.message, 'error');
@@ -163,7 +168,7 @@ function Flow({userData}) {
 
 
     const handleAction = () => {
-        if (formName || finalFlow.length > 0) {
+        if (getFormId) {
             updateSavedFormData();
         } else {
             saveFormData();
@@ -184,6 +189,12 @@ function Flow({userData}) {
                 {botSVGs[id]}
             </div>
         )
+    }
+
+    const redirectToBot = () => {
+        if(enableShare && finalFlow.length > 0) {
+            navigate('/form-bot')
+        }
     }
 
 
@@ -225,7 +236,7 @@ function Flow({userData}) {
 
 
                     <div className='work-header-2'>
-                        <div className='work-header-2-1' >
+                        <div className='work-header-2-1' style={{backgroundColor: enableShare ? '#1A5FFF': '#848890'}} onClick={() => redirectToBot()}>
                             Share
                         </div>
 
@@ -233,7 +244,7 @@ function Flow({userData}) {
                             Save
                         </div>
 
-                        <div>
+                        <div onClick={() => navigate('/workspace')}>
                             <img src={Close} alt='' />
                         </div>
                     </div>

@@ -50,7 +50,7 @@ function HomePage({isLogin}) {
                     <p className='text'>FormBot</p>
                 </div>
                 <div>
-                    <button className='button-1'>Sign in </button>
+                    <button className='button-1' onClick={() => navigate('/login')}>Sign in </button>
                     <button className='button-2' onClick={() => redirect()}>Create Form Button </button>
                 </div>
             </div>

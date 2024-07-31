@@ -24,13 +24,16 @@ function App() {
 
   const checkUserLoginStatus = async () => {
     try {
+      console.log(email)
       if (email !== '' && token !== '') {
-        const response = await axios.post('http://localhost:5000/login/status', email , {
+        const response = await axios.post('http://localhost:5000/login/status', {email} , {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
         if (response.data.status === 'Success') {
+          console.log(response.data.user);
+          localStorage.setItem('formBotCreatorId', response.data.user._id)
           setUserData(response.data.user);
           setIsLogin(true);
         }

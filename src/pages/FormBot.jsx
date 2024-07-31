@@ -11,6 +11,8 @@ function FormBot() {
   const [userInput, setUserInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [displayedSteps, setDisplayedSteps] = useState([]);
+  const [buttons, setButtons] = useState(false);
+  const ratings = [1, 2, 3, 4, 5]
 
   useEffect(() => {
     const getFormId = async () => {
@@ -37,6 +39,11 @@ function FormBot() {
     setUserInput(event.target.value);
   };
 
+  const sendRating = (userInput, id) => {
+    userInput = id;
+    return userInput;
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsTyping(true);
@@ -44,11 +51,11 @@ function FormBot() {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
+      setButtons(true);
 
       // Update the human response value in the backend
-      const response = await axios.put(`http://localhost:5000/update-flow/${flowId}`, {
-        name: flowData.name,
-        steps: flowData.map((step, index) =>
+      const response = await axios.post(`http://localhost:5000/post-response/${flowId}`, {
+        updatedSteps: flowData.map((step, index) =>
           index === currentStepIndex && step.stepType === 'human' ? { ...step, value: userInput } : step
         )
       });
@@ -66,6 +73,7 @@ function FormBot() {
       console.log(error);
     } finally {
       setIsTyping(false);
+      setButtons(false)
     }
   };
 
@@ -88,7 +96,7 @@ function FormBot() {
   );
 
   const renderHumanInput = (step) => (
-    <form onSubmit={handleSubmit} style={{float: 'right'}}>
+    <form onSubmit={handleSubmit} style={{margin: 'auto', marginRight: '10vw'}}>
       <div className='human-response' >
 
       {step.inputType === 'number' &&
@@ -141,20 +149,23 @@ function FormBot() {
         required
       />}
 
-{step.inputType === 'rating' &&
-      <input
-       type='number'
-        placeholder='Enter your response'
-        className='input-bar'
-        value={userInput}
-        onChange={handleInputChange}
-      />}
 
-      <button>
+
+{step.inputType === 'rating' &&
+      <div className='input-bar'>
+        <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', textAlign: 'center'}}>
+          {ratings.map((ele, ind) => (
+            <p style={{borderRadius: '50%',  backgroundColor: '#1A5FFF', width: '2vw', height: '4vh', color: 'white', cursor: 'pointer'}} key={ind} onClick={() => sendRating(userInput, ele)}>{ele}</p>
+          ))}
+        </div>
+      </div>}
+
+{!buttons && <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 31 26" fill="none">
           <path d="M0.75 25.6666V0.333313L30.8333 13L0.75 25.6666ZM3.91667 20.9166L22.6792 13L3.91667 5.08331V10.625L13.4167 13L3.91667 15.375V20.9166Z" fill="white" />
         </svg>
-      </button>
+      </button>}
+
       </div>
 
     </form>

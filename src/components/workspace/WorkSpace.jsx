@@ -67,7 +67,7 @@ function WorkSpace({ userData }) {
 
     const getFolders = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/get-folders');
+            const response = await axios.get(`http://localhost:5000/get-folders/${userData._id}`);
             if (response.data.status === 'Success') {
                 setFolders(response.data.data);
             }
